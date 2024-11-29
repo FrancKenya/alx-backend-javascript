@@ -1,25 +1,18 @@
 const express = require('express');
+
 const app = express();
+const port = 7865;
 
-// Root route handler
-app.get('/', (req, res) => {
-  res.send('Welcome to the payment system');
+app.get('/', (request, response) => {
+  response.send('Welcome to the payment system');
 });
 
-// New route: GET /cart/:id
-app.get('/cart/:id', (req, res) => {
-  const { id } = req.params;
-  if (/^\d+$/.test(id)) { // Validate id is a number
-    res.send(`Payment methods for cart ${id}`);
-  } else {
-    res.status(404).send('Not Found');
-  }
+app.get('/cart/:id([0-9]+)', (request, response) => {
+    response.send(`Payment methods for cart ${request.params.id}`);
 });
 
-// Start the server
-const PORT = 7865;
-app.listen(PORT, () => {
-  console.log(`API available on localhost port ${PORT}`);
+app.listen(port, () => {
+    console.log(`API available on localhost port ${port}`);
 });
 
-module.exports = app; // Export app for testing
+module.exports = app;
